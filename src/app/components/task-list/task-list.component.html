@@ -1,0 +1,49 @@
+<nav class="navbar navbar-dark bg-dark d-flex justify-content-center">
+  <span class="navbar-brand mb-2 h1" style="font-size: 2rem;">Lista de Tareas</span>
+</nav>
+<div class="container mt-4">
+  
+
+    <div class="btn-group mb-4">
+      <button class="btn btn-link" (click)="filterTasks('all')">Todas</button>
+      <button class="btn btn-link" (click)="filterTasks('completed')">Completadas</button>
+      <button class="btn btn-link" (click)="filterTasks('pending')">Pendientes</button>
+    </div>
+  
+
+    <div *ngFor="let task of filteredTasks; let i = index" class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">
+          {{ i + 1 }}.
+          <span [ngClass]="{'text-success': task.state === 'completada', 'text-danger': task.state === 'pendiente'}">
+            {{ task.state === 'completada' ? 'Completada' : 'Pendiente' }} 
+          </span>
+          <br>
+           {{ task.name }} - {{ task.date | date: 'yyyy-MM-dd' }}
+        </h5>
+  
+        <h6>Personas Asociadas:</h6>
+        <ul>
+          <li *ngFor="let person of task.persons">
+            {{ person.name }} ({{ person.age }})
+            <ul>
+              <li *ngFor="let skill of person.skills">
+                 {{ skill.name }}
+              </li>
+            </ul>
+          </li>
+        </ul>
+    <div class="dropdown position-absolute top-0 end-0 m-2">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{ i }}"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        Cambiar estado
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" (click)="changeTaskState(task, 'pendiente')">Pendiente</a></li>
+        <li><a class="dropdown-item" (click)="changeTaskState(task, 'completada')">Completada</a></li>
+      </ul>
+    </div>
+      </div>
+    </div>
+  </div>
+  

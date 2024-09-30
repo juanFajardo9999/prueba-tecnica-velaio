@@ -1,0 +1,31 @@
+.card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+  }
+  
+  .card-body {
+    padding: 1rem;
+  }
+  
+  .btn-link {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .btn-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+  
+  .text-danger {
+    color: red;
+  }
+  
+  .text-success {
+    color: green;
+  }
+  

@@ -1,0 +1,108 @@
+<nav class="navbar navbar-dark bg-dark d-flex justify-content-center">
+  <span class="navbar-brand mb-2 h1" style="font-size: 2rem;">Crear Nueva Tarea</span>
+</nav>
+  
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group mb-3">
+      <label for="taskName">Nombre de la tarea</label>
+      <input type="text" class="form-control" id="taskName" formControlName="taskName" placeholder="Ingrese el nombre de la tarea">
+
+      <div *ngIf="taskForm.get('taskName')?.invalid && taskForm.get('taskName')?.touched" class="text-danger">
+        El nombre de la tarea es obligatorio.
+      </div>
+    </div>
+  
+
+    <div class="form-group mb-3">
+      <label for="limitDate">Fecha límite</label>
+      <input type="date" class="form-control" id="limitDate" formControlName="limitDate">
+
+      <div *ngIf="taskForm.get('limitDate')?.invalid && taskForm.get('limitDate')?.touched" class="text-danger">
+        La fecha límite es obligatoria.
+      </div>
+    </div>
+  
+
+    <h4 class="mt-4 mb-4 text-primary">Personas Asociadas</h4>
+    <div *ngIf="persons.errors?.['duplicateNames']" class="alert alert-danger">
+      Los nombres de las personas no pueden repetirse.
+  </div>
+
+    <div *ngIf="persons.errors?.['noSkills']" class="alert alert-danger">
+        Cada persona debe tener al menos una habilidad.
+    </div>
+  
+
+    <div formArrayName="persons">
+
+      <div class="card mb-4" *ngFor="let person of persons.controls; let i = index" [formGroupName]="i">
+        <div class="card-body">
+          <div class="row">
+
+            <div class="form-group col-md-6 mb-3">
+              <label for="personName">Nombre Completo</label>
+              <input type="text" class="form-control" id="personName" formControlName="personName" placeholder="Ingrese el nombre completo">
+ 
+              <div *ngIf="person.get('personName')?.invalid && person.get('personName')?.touched" class="text-danger">
+                El nombre es obligatorio y debe tener al menos 5 caracteres.
+              </div>
+            </div>
+  
+
+            <div class="form-group col-md-6 mb-3">
+              <label for="age">Edad</label>
+              <input type="number" class="form-control" id="age" formControlName="age" placeholder="Ingrese la edad">
+
+              <div *ngIf="person.get('age')?.invalid && person.get('age')?.touched" class="text-danger">
+                La edad debe ser mayor a 18 años.
+              </div>
+            </div>
+          </div>
+  
+
+          <h5 class="text-secondary mt-3">Habilidades</h5>
+          <div formArrayName="skills">
+
+            <div class="input-group mb-2" *ngFor="let skill of getSkills(i).controls; let j = index" [formGroupName]="j">
+              <input type="text" class="form-control" formControlName="skill" placeholder="Ingrese la habilidad">
+              <button type="button" class="btn btn-danger" (click)="removeSkill(i, j)">
+                <i class="bi bi-x-lg"></i> Eliminar habilidad
+              </button>
+            </div>
+  
+
+            <div *ngIf="getSkills(i).invalid && getSkills(i).touched" class="text-danger">
+              La habilidad no puede estar vacía.
+            </div>
+  
+
+            <div class="form-group mt-2">
+              <button type="button" class="btn btn-outline-primary" (click)="addSkill(i)">
+                <i class="bi bi-plus-lg"></i> Añadir habilidad
+              </button>
+            </div>
+          </div>
+  
+
+          <div class="form-group mt-3">
+            <button type="button" class="btn btn-outline-danger" (click)="removePerson(i)">
+              <i class="bi bi-person-x"></i> Eliminar persona
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Botón para agregar una nueva persona -->
+    <button type="button" class="btn btn-outline-primary add-person-button mb-4" (click)="addPerson()">
+      <i class="bi bi-person-plus"></i> Añadir persona
+    </button>
+  
+    <!-- Botón para guardar la tarea -->
+    <button type="submit" 
+    class="btn btn-success save-button" 
+    [disabled]="taskForm.invalid" 
+    [ngClass]="{'disabled': taskForm.invalid}">
+<i class="bi bi-save"></i> Guardar Tarea
+</button>

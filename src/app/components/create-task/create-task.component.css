@@ -1,0 +1,38 @@
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  
+    align-items: center;      
+    margin-top: 5%;
+}
+
+.row-flow {
+    display: flex;
+    flex-direction: row;
+}
+
+h3, h5, h6 {
+    font-weight: bold;
+  }
+  
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+  
+  .btn-outline-primary, .btn-outline-danger {
+    width: 100%;
+  }
+
+  .add-person-button {
+    width: 25%;
+  }
+  
+  .form-control {
+    border-radius: 0.25rem;
+  }
+
+  .save-button {
+    margin-top: 2%;
+    margin-bottom: 2%;
+  }
